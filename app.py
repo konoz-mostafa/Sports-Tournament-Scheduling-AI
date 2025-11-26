@@ -1,10 +1,10 @@
 from flask import Flask, render_template
-from schedule_model import generate_schedule, teams, venues, all_dates, match_times
+from schedule_model import generate_weekly_schedule, teams, venues, all_dates, match_times
 
 app = Flask(__name__)
 
 # توليد جدول الدوري
-full_schedule = generate_schedule(teams, venues, all_dates, match_times)
+full_schedule = generate_weekly_schedule(teams, venues, all_dates, match_times)
 
 # ترتيب الجدول حسب التاريخ والساعة
 full_schedule.sort(key=lambda m: (m.date, m.time))
