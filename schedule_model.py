@@ -32,7 +32,9 @@ def generate_weekly_schedule(teams, venues, all_dates, match_times, min_rest_day
     schedule = []
     last_played = {team: start_date - timedelta(days=min_rest_days) for team in teams}
 
-    # توليد كل المباريات الممكنة مرتين لكل فريق
+    # معلومات لكل يوم
+    day_info = {d: {'count': 0, 'venues': set(), 'times': set()} for d in all_dates}
+
     pairings = []
     for t1 in teams:
         for t2 in teams:
@@ -41,15 +43,8 @@ def generate_weekly_schedule(teams, venues, all_dates, match_times, min_rest_day
                 pairings.append((t2, t1))
 
     random.shuffle(pairings)
+    matches_count = {(t1, t2): 0 for t1 in teams for t2 in teams if t1 != t2}
 
-    # تخزين عدد مرات المباراة بين كل فريقين
-    matches_count = {}
-    for t1 in teams:
-        for t2 in teams:
-            if t1 != t2:
-                matches_count[(t1, t2)] = 0
-
-    # ترتيب الأيام أسبوعياً
     week_dates = all_dates[::7]  # بداية كل أسبوع
 
     for week_start in week_dates:
@@ -62,26 +57,38 @@ def generate_weekly_schedule(teams, venues, all_dates, match_times, min_rest_day
 
             possible_days = [d for d in all_dates if week_start <= d < week_start + timedelta(days=7)
                              and (d - last_played[home]).days >= min_rest_days
-                             and (d - last_played[away]).days >= min_rest_days]
+                             and (d - last_played[away]).days >= min_rest_days
+                             and day_info[d]['count'] < 2]
+
             if not possible_days:
                 continue
 
-            date = random.choice(possible_days)
-            time = random.choice(match_times)
-            venue = random.choice(venues)
+            # نحاول نختار وقت وملعب متاحين
+            random.shuffle(possible_days)
+            for date in possible_days:
+                available_times = [t for t in match_times if t not in day_info[date]['times']]
+                available_venues = [v for v in venues if v not in day_info[date]['venues']]
+                if not available_times or not available_venues:
+                    continue
 
-            match = Match(home, away, date, time, venue)
-            schedule.append(match)
+                time = random.choice(available_times)
+                venue = random.choice(available_venues)
 
-            last_played[home] = date
-            last_played[away] = date
-            matches_count[(home, away)] += 1
-            used_teams.update([home, away])
+                match = Match(home, away, date, time, venue)
+                schedule.append(match)
 
-    # ترتيب الجدول حسب التاريخ
+                last_played[home] = date
+                last_played[away] = date
+                matches_count[(home, away)] += 1
+                used_teams.update([home, away])
+
+                day_info[date]['count'] += 1
+                day_info[date]['venues'].add(venue)
+                day_info[date]['times'].add(time)
+                break  # بعد ما نحط المباراة نخرج
+
     schedule.sort(key=lambda m: m.date)
     return schedule
-
 
 # طباعة جدول كل فريق
 def print_team_schedules(schedule):
