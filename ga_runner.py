@@ -236,95 +236,181 @@ def regenerate_missing_matches(schedule, teams, venues, match_times, all_dates, 
 
 def repair_schedule(schedule, teams, venues, match_times, all_dates, min_rest_days=4, max_retries=5):
     """
-    Repair invalid schedule by removing duplicates and fixing conflicts
-    Includes retry mechanism and match regeneration
+    Enhanced repair function that fixes ALL validation errors:
+    - Duplicates and self-play
+    - Venue conflicts
+    - Rest days violations
+    - Missing matches
+    - Home/away imbalance
+    - Consecutive home matches
     
     Returns:
     --------
     List[Match]: Repaired schedule
     """
     best_repaired = schedule
-    best_match_count = len(schedule)
+    best_error_count = float('inf')
     expected_matches = len(teams) * (len(teams) - 1)  # 306
     
     for retry in range(max_retries):
-        # Remove duplicates and self-play matches
+        repaired = copy.deepcopy(schedule)
+        
+        # Step 1: Remove duplicates and self-play
         seen = set()
         valid_schedule = []
-        for match in schedule:
+        for match in repaired:
             key = (match.team1, match.team2, match.date)
             if key not in seen and match.team1 != match.team2:
                 seen.add(key)
-                valid_schedule.append(copy.deepcopy(match))
+                valid_schedule.append(match)
+        repaired = valid_schedule
         
-        # Remove venue conflicts (keep first occurrence)
+        # Step 2: Fix venue conflicts
         venue_slots = {}
-        repaired = []
-        for match in valid_schedule:
+        fixed_schedule = []
+        for match in repaired:
             key = (match.date, match.time, match.venue)
             if key not in venue_slots:
                 venue_slots[key] = True
-                repaired.append(match)
+                fixed_schedule.append(match)
             else:
                 # Try to fix by changing venue or time
-                available_venues = [v for v in venues if v != match.venue]
-                available_times = [t for t in match_times if t != match.time]
-                
                 fixed = False
-                # Try changing venue first
-                for new_venue in available_venues:
-                    new_key = (match.date, match.time, new_venue)
-                    if new_key not in venue_slots:
-                        match.venue = new_venue
-                        venue_slots[new_key] = True
-                        repaired.append(match)
-                        fixed = True
-                        break
-                
-                # If venue change didn't work, try changing time
-                if not fixed:
-                    for new_time in available_times:
-                        new_key = (match.date, new_time, match.venue)
+                for new_venue in venues:
+                    for new_time in match_times:
+                        new_key = (match.date, new_time, new_venue)
                         if new_key not in venue_slots:
+                            match.venue = new_venue
                             match.time = new_time
                             venue_slots[new_key] = True
-                            repaired.append(match)
+                            fixed_schedule.append(match)
                             fixed = True
                             break
-                
-                # If still not fixed, try changing both venue and time
-                if not fixed:
-                    for new_venue in available_venues:
-                        for new_time in available_times:
-                            new_key = (match.date, new_time, new_venue)
-                            if new_key not in venue_slots:
-                                match.venue = new_venue
-                                match.time = new_time
-                                venue_slots[new_key] = True
-                                repaired.append(match)
-                                fixed = True
-                                break
-                        if fixed:
-                            break
+                    if fixed:
+                        break
+        repaired = fixed_schedule
         
-        # If we lost too many matches, try to regenerate
-        if len(repaired) < expected_matches * 0.9:  # Lost more than 10%
+        # Step 3: Fix rest days violations
+        repaired.sort(key=lambda m: m.date)
+        team_last_match = {}
+        fixed_rest = []
+        for match in repaired:
+            team1_ok = True
+            team2_ok = True
+            
+            if match.team1 in team_last_match:
+                days_apart = (match.date - team_last_match[match.team1]).days
+                if days_apart < min_rest_days:
+                    team1_ok = False
+            
+            if match.team2 in team_last_match:
+                days_apart = (match.date - team_last_match[match.team2]).days
+                if days_apart < min_rest_days:
+                    team2_ok = False
+            
+            if team1_ok and team2_ok:
+                fixed_rest.append(match)
+                team_last_match[match.team1] = match.date
+                team_last_match[match.team2] = match.date
+            else:
+                # Try to reschedule this match to a later date
+                min_date = max(
+                    team_last_match.get(match.team1, match.date) + timedelta(days=min_rest_days),
+                    team_last_match.get(match.team2, match.date) + timedelta(days=min_rest_days)
+                )
+                # Find available slot after min_date
+                rescheduled = False
+                for date in all_dates:
+                    if date < min_date:
+                        continue
+                    for time in match_times:
+                        for venue in venues:
+                            key = (date, time, venue)
+                            if key not in venue_slots:
+                                match.date = date
+                                match.time = time
+                                match.venue = venue
+                                venue_slots[key] = True
+                                fixed_rest.append(match)
+                                team_last_match[match.team1] = date
+                                team_last_match[match.team2] = date
+                                rescheduled = True
+                                break
+                        if rescheduled:
+                            break
+                    if rescheduled:
+                        break
+        repaired = fixed_rest
+        
+        # Step 4: Regenerate missing matches
+        if len(repaired) < expected_matches:
             repaired = regenerate_missing_matches(repaired, teams, venues, match_times, all_dates, min_rest_days)
         
-        # Keep track of best repair attempt
-        if len(repaired) > best_match_count:
-            best_repaired = repaired
-            best_match_count = len(repaired)
+        # Step 5: Fix home/away balance
+        pair_matches = {}
+        for match in repaired:
+            pair = tuple(sorted([match.team1, match.team2]))
+            if pair not in pair_matches:
+                pair_matches[pair] = []
+            pair_matches[pair].append(match)
         
-        # If we have enough matches and it's valid, return
-        if len(repaired) >= expected_matches * 0.95:  # At least 95% of expected
+        # Ensure each pair has exactly 2 matches (1 home, 1 away)
+        balanced_schedule = []
+        for pair, matches in pair_matches.items():
+            home_count = sum(1 for m in matches if m.team1 == pair[0])
+            away_count = sum(1 for m in matches if m.team1 == pair[1])
+            
+            if home_count == 1 and away_count == 1:
+                balanced_schedule.extend(matches)
+            elif len(matches) == 2:
+                # Fix: ensure one is home and one is away
+                if home_count == 2:
+                    matches[1].team1, matches[1].team2 = matches[1].team2, matches[1].team1
+                elif away_count == 2:
+                    matches[0].team1, matches[0].team2 = matches[0].team2, matches[0].team1
+                balanced_schedule.extend(matches)
+            else:
+                balanced_schedule.extend(matches[:2])  # Keep first 2
+        
+        repaired = balanced_schedule
+        
+        # Step 6: Fix consecutive home matches
+        team_schedule = {team: [] for team in teams}
+        for match in repaired:
+            team_schedule[match.team1].append(('home', match.date, match))
+            team_schedule[match.team2].append(('away', match.date, match))
+        
+        for team, matches in team_schedule.items():
+            matches.sort(key=lambda x: x[1])
+            consecutive_home = 0
+            for i, (match_type, date, match_obj) in enumerate(matches):
+                if match_type == 'home':
+                    consecutive_home += 1
+                    if consecutive_home >= 3:
+                        # Swap with next away match if possible
+                        for j in range(i+1, len(matches)):
+                            if matches[j][0] == 'away':
+                                # Swap home/away
+                                other_match = matches[j][2]
+                                if match_obj.team1 == team:
+                                    match_obj.team1, match_obj.team2 = match_obj.team2, match_obj.team1
+                                if other_match.team2 == team:
+                                    other_match.team1, other_match.team2 = other_match.team2, other_match.team1
+                                consecutive_home = 0
+                                break
+                else:
+                    consecutive_home = 0
+        
+        # Validate and count errors
+        is_valid, errors = validate_schedule(repaired, teams, min_rest_days)
+        if is_valid:
             repaired.sort(key=lambda m: m.date)
             return repaired
         
-        # For next retry, use the repaired schedule as base
-        schedule = repaired
+        if len(errors) < best_error_count:
+            best_repaired = repaired
+            best_error_count = len(errors)
     
-    # Return best attempt
     best_repaired.sort(key=lambda m: m.date)
     return best_repaired
 
@@ -408,7 +494,7 @@ def run_genetic_algorithm(
                   for _ in range(population_size)]
     
     # Evaluate initial population
-    fitness_scores = [compute_fitness(schedule) for schedule in population]
+    fitness_scores = [compute_fitness(schedule, teams=teams) for schedule in population]
     
     # Track history
     history = {
@@ -484,7 +570,7 @@ def run_genetic_algorithm(
         
         # Update population
         population = new_population
-        fitness_scores = [compute_fitness(schedule) for schedule in population]
+        fitness_scores = [compute_fitness(schedule, teams=teams) for schedule in population]
         
         # Update best
         current_best = max(fitness_scores)
