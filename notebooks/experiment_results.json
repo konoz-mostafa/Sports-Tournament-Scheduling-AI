@@ -1,0 +1,224 @@
+[
+  {
+    "config": {
+      "name": "Baseline",
+      "population_size": 30,
+      "generations": 50,
+      "mutation_rate": 0.1,
+      "crossover_rate": 0.8,
+      "elitism_count": 2,
+      "selection_method": "tournament",
+      "tournament_size": 3,
+      "crossover_method": "single_point"
+    },
+    "statistics": {
+      "best_fitness_mean": 88.43333333333334,
+      "best_fitness_std": 0.6128258770283466,
+      "best_fitness_max": 89.30000000000001,
+      "best_fitness_min": 88.0,
+      "avg_fitness_mean": 87.59333333333335
+    },
+    "runs": [
+      {
+        "best_fitness": 89.30000000000001,
+        "final_avg_fitness": 88.02000000000001,
+        "final_worst_fitness": 86.9
+      },
+      {
+        "best_fitness": 88.0,
+        "final_avg_fitness": 87.96000000000001,
+        "final_worst_fitness": 86.8
+      },
+      {
+        "best_fitness": 88.0,
+        "final_avg_fitness": 86.80000000000001,
+        "final_worst_fitness": 86.80000000000001
+      }
+    ]
+  },
+  {
+    "config": {
+      "name": "Large Population",
+      "population_size": 100,
+      "generations": 50,
+      "mutation_rate": 0.1,
+      "crossover_rate": 0.8,
+      "elitism_count": 2,
+      "selection_method": "tournament",
+      "tournament_size": 3,
+      "crossover_method": "single_point"
+    },
+    "statistics": {
+      "best_fitness_mean": 94.39999999999999,
+      "best_fitness_std": 1.1313708498984787,
+      "best_fitness_max": 95.2,
+      "best_fitness_min": 92.8,
+      "avg_fitness_mean": 94.312
+    },
+    "runs": [
+      {
+        "best_fitness": 95.2,
+        "final_avg_fitness": 95.2,
+        "final_worst_fitness": 95.2
+      },
+      {
+        "best_fitness": 92.8,
+        "final_avg_fitness": 92.57199999999999,
+        "final_worst_fitness": 91.6
+      },
+      {
+        "best_fitness": 95.2,
+        "final_avg_fitness": 95.164,
+        "final_worst_fitness": 94.0
+      }
+    ]
+  },
+  {
+    "config": {
+      "name": "High Mutation",
+      "population_size": 50,
+      "generations": 50,
+      "mutation_rate": 0.3,
+      "crossover_rate": 0.8,
+      "elitism_count": 2,
+      "selection_method": "tournament",
+      "tournament_size": 3,
+      "crossover_method": "single_point"
+    },
+    "statistics": {
+      "best_fitness_mean": 95.2,
+      "best_fitness_std": 1.697056274847718,
+      "best_fitness_max": 96.4,
+      "best_fitness_min": 92.8,
+      "avg_fitness_mean": 94.736
+    },
+    "runs": [
+      {
+        "best_fitness": 92.8,
+        "final_avg_fitness": 91.624,
+        "final_worst_fitness": 90.4
+      },
+      {
+        "best_fitness": 96.4,
+        "final_avg_fitness": 96.256,
+        "final_worst_fitness": 95.2
+      },
+      {
+        "best_fitness": 96.4,
+        "final_avg_fitness": 96.32800000000002,
+        "final_worst_fitness": 95.2
+      }
+    ]
+  },
+  {
+    "config": {
+      "name": "Roulette Selection",
+      "population_size": 50,
+      "generations": 50,
+      "mutation_rate": 0.1,
+      "crossover_rate": 0.8,
+      "elitism_count": 2,
+      "selection_method": "roulette",
+      "tournament_size": 3,
+      "crossover_method": "single_point"
+    },
+    "statistics": {
+      "best_fitness_mean": 89.60000000000001,
+      "best_fitness_std": 2.039607805437114,
+      "best_fitness_max": 91.6,
+      "best_fitness_min": 86.8,
+      "avg_fitness_mean": 89.312
+    },
+    "runs": [
+      {
+        "best_fitness": 90.4,
+        "final_avg_fitness": 90.064,
+        "final_worst_fitness": 89.2
+      },
+      {
+        "best_fitness": 91.6,
+        "final_avg_fitness": 91.57599999999998,
+        "final_worst_fitness": 90.4
+      },
+      {
+        "best_fitness": 86.8,
+        "final_avg_fitness": 86.296,
+        "final_worst_fitness": 85.6
+      }
+    ]
+  },
+  {
+    "config": {
+      "name": "Two-Point Crossover",
+      "population_size": 50,
+      "generations": 50,
+      "mutation_rate": 0.1,
+      "crossover_rate": 0.8,
+      "elitism_count": 2,
+      "selection_method": "tournament",
+      "tournament_size": 3,
+      "crossover_method": "two_point"
+    },
+    "statistics": {
+      "best_fitness_mean": 91.60000000000001,
+      "best_fitness_std": 0.9797958971132678,
+      "best_fitness_max": 92.8,
+      "best_fitness_min": 90.4,
+      "avg_fitness_mean": 91.592
+    },
+    "runs": [
+      {
+        "best_fitness": 90.4,
+        "final_avg_fitness": 90.376,
+        "final_worst_fitness": 89.2
+      },
+      {
+        "best_fitness": 91.6,
+        "final_avg_fitness": 91.6,
+        "final_worst_fitness": 91.6
+      },
+      {
+        "best_fitness": 92.8,
+        "final_avg_fitness": 92.8,
+        "final_worst_fitness": 92.8
+      }
+    ]
+  },
+  {
+    "config": {
+      "name": "Best Combination",
+      "population_size": 100,
+      "generations": 100,
+      "mutation_rate": 0.15,
+      "crossover_rate": 0.8,
+      "elitism_count": 5,
+      "selection_method": "tournament",
+      "tournament_size": 5,
+      "crossover_method": "two_point"
+    },
+    "statistics": {
+      "best_fitness_mean": 97.59999999999998,
+      "best_fitness_std": 1.4210854715202004e-14,
+      "best_fitness_max": 97.6,
+      "best_fitness_min": 97.6,
+      "avg_fitness_mean": 97.57599999999998
+    },
+    "runs": [
+      {
+        "best_fitness": 97.6,
+        "final_avg_fitness": 97.55199999999999,
+        "final_worst_fitness": 96.4
+      },
+      {
+        "best_fitness": 97.6,
+        "final_avg_fitness": 97.57599999999998,
+        "final_worst_fitness": 96.4
+      },
+      {
+        "best_fitness": 97.6,
+        "final_avg_fitness": 97.6,
+        "final_worst_fitness": 97.6
+      }
+    ]
+  }
+]
