@@ -12,27 +12,27 @@
       "crossover_method": "single_point"
     },
     "statistics": {
-      "best_fitness_mean": 88.43333333333334,
-      "best_fitness_std": 0.6128258770283466,
-      "best_fitness_max": 89.30000000000001,
+      "best_fitness_mean": 88.39999999999999,
+      "best_fitness_std": 0.5656854249492393,
+      "best_fitness_max": 89.2,
       "best_fitness_min": 88.0,
-      "avg_fitness_mean": 87.59333333333335
+      "avg_fitness_mean": 87.60000000000001
     },
     "runs": [
       {
-        "best_fitness": 89.30000000000001,
-        "final_avg_fitness": 88.02000000000001,
-        "final_worst_fitness": 86.9
+        "best_fitness": 88.0,
+        "final_avg_fitness": 88.0,
+        "final_worst_fitness": 88.0
       },
       {
-        "best_fitness": 88.0,
-        "final_avg_fitness": 87.96000000000001,
-        "final_worst_fitness": 86.8
+        "best_fitness": 89.2,
+        "final_avg_fitness": 88.0,
+        "final_worst_fitness": 88.0
       },
       {
         "best_fitness": 88.0,
         "final_avg_fitness": 86.80000000000001,
-        "final_worst_fitness": 86.80000000000001
+        "final_worst_fitness": 86.8
       }
     ]
   },
@@ -49,27 +49,27 @@
       "crossover_method": "single_point"
     },
     "statistics": {
-      "best_fitness_mean": 94.39999999999999,
-      "best_fitness_std": 1.1313708498984787,
-      "best_fitness_max": 95.2,
-      "best_fitness_min": 92.8,
-      "avg_fitness_mean": 94.312
+      "best_fitness_mean": 95.76666666666667,
+      "best_fitness_std": 1.3274871834493223,
+      "best_fitness_max": 97.6,
+      "best_fitness_min": 94.5,
+      "avg_fitness_mean": 94.94666666666667
     },
     "runs": [
       {
-        "best_fitness": 95.2,
-        "final_avg_fitness": 95.2,
+        "best_fitness": 97.6,
+        "final_avg_fitness": 96.376,
         "final_worst_fitness": 95.2
       },
       {
-        "best_fitness": 92.8,
-        "final_avg_fitness": 92.57199999999999,
-        "final_worst_fitness": 91.6
+        "best_fitness": 95.2,
+        "final_avg_fitness": 93.976,
+        "final_worst_fitness": 92.8
       },
       {
-        "best_fitness": 95.2,
-        "final_avg_fitness": 95.164,
-        "final_worst_fitness": 94.0
+        "best_fitness": 94.5,
+        "final_avg_fitness": 94.488,
+        "final_worst_fitness": 93.3
       }
     ]
   },
@@ -87,26 +87,26 @@
     },
     "statistics": {
       "best_fitness_mean": 95.2,
-      "best_fitness_std": 1.697056274847718,
-      "best_fitness_max": 96.4,
-      "best_fitness_min": 92.8,
-      "avg_fitness_mean": 94.736
+      "best_fitness_std": 2.9393876913398147,
+      "best_fitness_max": 98.8,
+      "best_fitness_min": 91.6,
+      "avg_fitness_mean": 94.496
     },
     "runs": [
       {
-        "best_fitness": 92.8,
-        "final_avg_fitness": 91.624,
+        "best_fitness": 95.2,
+        "final_avg_fitness": 94.40799999999999,
+        "final_worst_fitness": 92.8
+      },
+      {
+        "best_fitness": 91.6,
+        "final_avg_fitness": 91.48,
         "final_worst_fitness": 90.4
       },
       {
-        "best_fitness": 96.4,
-        "final_avg_fitness": 96.256,
-        "final_worst_fitness": 95.2
-      },
-      {
-        "best_fitness": 96.4,
-        "final_avg_fitness": 96.32800000000002,
-        "final_worst_fitness": 95.2
+        "best_fitness": 98.8,
+        "final_avg_fitness": 97.6,
+        "final_worst_fitness": 96.4
       }
     ]
   },
@@ -123,26 +123,26 @@
       "crossover_method": "single_point"
     },
     "statistics": {
-      "best_fitness_mean": 89.60000000000001,
-      "best_fitness_std": 2.039607805437114,
+      "best_fitness_mean": 90.0,
+      "best_fitness_std": 1.4966629547095749,
       "best_fitness_max": 91.6,
-      "best_fitness_min": 86.8,
-      "avg_fitness_mean": 89.312
+      "best_fitness_min": 88.0,
+      "avg_fitness_mean": 88.66399999999999
     },
     "runs": [
       {
         "best_fitness": 90.4,
-        "final_avg_fitness": 90.064,
-        "final_worst_fitness": 89.2
+        "final_avg_fitness": 88.76799999999999,
+        "final_worst_fitness": 88.0
       },
       {
         "best_fitness": 91.6,
-        "final_avg_fitness": 91.57599999999998,
-        "final_worst_fitness": 90.4
+        "final_avg_fitness": 90.76,
+        "final_worst_fitness": 89.2
       },
       {
-        "best_fitness": 86.8,
-        "final_avg_fitness": 86.296,
+        "best_fitness": 88.0,
+        "final_avg_fitness": 86.464,
         "final_worst_fitness": 85.6
       }
     ]
@@ -160,27 +160,27 @@
       "crossover_method": "two_point"
     },
     "statistics": {
-      "best_fitness_mean": 91.60000000000001,
-      "best_fitness_std": 0.9797958971132678,
-      "best_fitness_max": 92.8,
-      "best_fitness_min": 90.4,
-      "avg_fitness_mean": 91.592
+      "best_fitness_mean": 92.56666666666666,
+      "best_fitness_std": 2.2514193054357707,
+      "best_fitness_max": 95.2,
+      "best_fitness_min": 89.7,
+      "avg_fitness_mean": 92.47866666666665
     },
     "runs": [
-      {
-        "best_fitness": 90.4,
-        "final_avg_fitness": 90.376,
-        "final_worst_fitness": 89.2
-      },
-      {
-        "best_fitness": 91.6,
-        "final_avg_fitness": 91.6,
-        "final_worst_fitness": 91.6
-      },
       {
         "best_fitness": 92.8,
         "final_avg_fitness": 92.8,
         "final_worst_fitness": 92.8
+      },
+      {
+        "best_fitness": 89.7,
+        "final_avg_fitness": 89.652,
+        "final_worst_fitness": 88.5
+      },
+      {
+        "best_fitness": 95.2,
+        "final_avg_fitness": 94.984,
+        "final_worst_fitness": 94.0
       }
     ]
   },
@@ -197,27 +197,27 @@
       "crossover_method": "two_point"
     },
     "statistics": {
-      "best_fitness_mean": 97.59999999999998,
-      "best_fitness_std": 1.4210854715202004e-14,
-      "best_fitness_max": 97.6,
-      "best_fitness_min": 97.6,
-      "avg_fitness_mean": 97.57599999999998
+      "best_fitness_mean": 97.2,
+      "best_fitness_std": 1.4966629547095738,
+      "best_fitness_max": 98.8,
+      "best_fitness_min": 95.2,
+      "avg_fitness_mean": 97.15999999999998
     },
     "runs": [
       {
-        "best_fitness": 97.6,
-        "final_avg_fitness": 97.55199999999999,
-        "final_worst_fitness": 96.4
+        "best_fitness": 98.8,
+        "final_avg_fitness": 98.728,
+        "final_worst_fitness": 97.6
+      },
+      {
+        "best_fitness": 95.2,
+        "final_avg_fitness": 95.176,
+        "final_worst_fitness": 94.0
       },
       {
         "best_fitness": 97.6,
         "final_avg_fitness": 97.57599999999998,
         "final_worst_fitness": 96.4
-      },
-      {
-        "best_fitness": 97.6,
-        "final_avg_fitness": 97.6,
-        "final_worst_fitness": 97.6
       }
     ]
   }
